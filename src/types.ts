@@ -1,3 +1,12 @@
+type Dir = string | string[];
+
 export interface Options {
-  dirs: string[];
+  dir: Dir;
+  ignore?: string[];
+  outputFile?: string;
+}
+
+export interface Exports {
+  default?: string;
+  nameds: string[];
 }

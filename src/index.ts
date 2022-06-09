@@ -1,19 +1,27 @@
 import { createUnplugin } from "unplugin";
+import chokidar from "chokidar";
 import type { Options } from "./types";
+import { genReExportFile } from "./utils";
 
 export default createUnplugin<Options>((options) => {
-  // const list = getWatchFiles(options?.dirs);
+  if (!options) {
+    return {
+      name: "unplugin-auto-re-export",
+    };
+  }
+
+  const watcher = chokidar.watch(options.dir, {
+    persistent: true,
+  });
+  watcher
+    .on("add", (path) => genReExportFile(options, path))
+    .on("change", (path) => genReExportFile(options, path))
+    .on("unlink", (path) => genReExportFile(options, path));
 
   return {
     name: "unplugin-auto-re-export",
-    transformInclude(id) {
-      return id.endsWith("main.ts");
-    },
-    transform(code) {
-      return code.replace("__UNPLUGIN__", `Hello Unplugin! ${options}`);
-    },
-    watchChange(this, id, change) {
-      // genReExportFile(list);
+    buildEnd() {
+      watcher.close().then(() => console.log("closed"));
     },
   };
 });

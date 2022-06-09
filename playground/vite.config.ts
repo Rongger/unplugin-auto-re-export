@@ -1,10 +1,14 @@
-import { defineConfig } from 'vite'
-import Inspect from 'vite-plugin-inspect'
-import Unplugin from '../src/vite'
+import { defineConfig } from "vite";
+import Inspect from "vite-plugin-inspect";
+import Unplugin from "../src/vite";
 
 export default defineConfig({
   plugins: [
-    // Inspect(),
-    Unplugin(),
+    Inspect(),
+    Unplugin({
+      dir: ["consts", "utils"],
+      ignore: ["consts/README.md"],
+      outputFile: "index.ts",
+    }),
   ],
-})
+});

@@ -1,23 +1,21 @@
 {
-  "name": "unplugin-starter",
-  "version": "0.1.0",
+  "name": "unplugin-auto-re-export",
+  "version": "0.0.1",
   "packageManager": "pnpm@7.1.1",
-  "description": "Register global imports on demand for Vite and Webpack",
+  "description": "Unified utils for auto generate re-export file.",
   "keywords": [
-    "unplugin",
-    "vite",
-    "webpack",
-    "rollup",
-    "transform"
+    "auto-export-plugin",
+    "auto-export",
+    "re-export"
   ],
-  "homepage": "https://github.com/antfu/unplugin-starter#readme",
+  "homepage": "https://github.com/Rongger/unplugin-auto-re-export#readme",
   "bugs": {
-    "url": "https://github.com/antfu/unplugin-starter/issues"
+    "url": "https://github.com/Rongger/unplugin-auto-re-export/issues"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/antfu/unplugin-starter.git"
+    "url": "git+https://github.com/Rongger/unplugin-auto-re-export.git"
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -65,6 +63,8 @@
     "test": "vitest"
   },
   "dependencies": {
+    "acorn": "^8.7.1",
+    "chokidar": "^3.5.3",
     "unplugin": "^0.6.3"
   },
   "devDependencies": {
