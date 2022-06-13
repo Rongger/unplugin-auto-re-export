@@ -7,7 +7,7 @@ Unified utils for auto generate re-export file.
 ###### feature
 
 - Supports Vite, Webpack, Rollup, esbuild and more, powered by <a href="https://github.com/unjs/unplugin">unplugin</a>.
-- auto generate re-export file and modify when watched files change.
+- Auto generate re-export file and modify when watched files change.
 
 ## Install
 
@@ -83,4 +83,4 @@ module.exports = {
 | ---------- | -------------------- | ---------- | --------------------------------------------- |
 | dir        | `string \| string[]` | `[]`       | An array of watched directory path            |
 | ignore     | `string[]`           | `[]`       | An array of file path to exclude watched file |
-| outputFile | `string`             | `index.js` | define the outputfile name and extension name |
+| outputFile | `string`             | `index.js` | Define the outputfile name and extension name |
