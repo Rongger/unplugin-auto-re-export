@@ -1,7 +1,23 @@
-import { describe, expect, it, test } from "vitest";
+import { describe, expect, test } from "vitest";
+import { getOutputFilePaths } from "../src/utils";
 
 describe("index", () => {
-  it("hi vitest", () => {
-    expect(1).toBe(1);
+  test("getOutputFilePaths", async () => {
+    expect(
+      getOutputFilePaths("src/consts")
+    ).toMatchInlineSnapshot(`
+      [
+        "src/consts/index.js",
+      ]
+    `);
+
+    expect(
+      getOutputFilePaths(["src/consts", "src/utils"])
+    ).toMatchInlineSnapshot(`
+      [
+        "src/consts/index.js",
+        "src/utils/index.js",
+      ]
+    `);
   });
 });

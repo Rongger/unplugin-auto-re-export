@@ -1,19 +1,19 @@
-import type { Options } from "./types";
+import type { Dir, Options } from "./types";
 import fg from "fast-glob";
 import fs from "fs";
 import path from "path";
 import { parseExport, generateRaw } from "./parse";
 
-export function getWatchFiles(dir: Options["dir"]): string[][] {
-  const dirs = resolvePath2List(dir);
+export function getWatchFiles(dir: Dir): string[][] {
+  const dirs = resolveDir(dir);
   return dirs.map((path) => {
-    const source = resolvePath2List(path) as string[];
+    const source = resolveDir(path) as string[];
     return fg.sync(source);
   });
 }
 
 export function genReExportFile(options: Options, path: string) {
-  const dirs = resolvePath2List(options.dir);
+  const dirs = resolveDir(options.dir);
 
   const result = dirs.find((i: string) => path.startsWith(i));
 
@@ -23,8 +23,8 @@ export function genReExportFile(options: Options, path: string) {
 }
 
 export function writeExportFromDir(dirPath: string, options: Options) {
-  const { ignore = [], outputFile = "index.js" } = options;
-  const indexPath = path.join(dirPath, outputFile);
+  const { ignore = [] } = options;
+  const [indexPath] = getOutputFilePaths(dirPath, options.outputFile);
   const files = fg.sync(`${dirPath}/**/*.{js,jsx,ts,tsx}`, {
     ignore: [...ignore, indexPath],
   });
@@ -41,6 +41,10 @@ export function writeExportFromDir(dirPath: string, options: Options) {
   if (content) fs.writeFileSync(indexPath, content);
 }
 
-function resolvePath2List(path: string | string[]) {
-  return Array.isArray(path) ? path : [path];
+function resolveDir(dir: Dir) {
+  return Array.isArray(dir) ? dir : [dir];
+}
+
+export function getOutputFilePaths(dir: Dir, outputFile = "index.js") {
+  return resolveDir(dir).map((dirPath) => path.join(dirPath, outputFile));
 }

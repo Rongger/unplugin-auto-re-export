@@ -3,35 +3,52 @@ import { describe, expect, test } from "vitest";
 import { parseExport, generateRaw } from "../src/parse";
 
 describe("parse", () => {
-  const dirPath = "playground/consts";
+  const dirPath = "playground/utils";
 
   test("parseExport", async () => {
-    expect(
-      parseExport(path.join(dirPath, "/const-1.ts"))
-    ).toMatchInlineSnapshot(`
-      {
-        "default": "Def",
-        "nameds": [
-          "NAME",
-          "test",
-          "test1",
-        ],
-      }
-    `);
+    expect(parseExport(path.join(dirPath, "/exports.ts")))
+      .toMatchInlineSnapshot(`
+        {
+          "default": "l",
+          "nameds": [
+            "utilB",
+            "a",
+            "b",
+            "d",
+            "ClassName",
+            "e",
+            "f",
+            "g1",
+            "h2",
+            "bar",
+          ],
+        }
+      `);
   });
 
   test("generateRaw", () => {
     expect(
       generateRaw(
         {
-          default: "Def",
-          nameds: ["NAME", "AGE", "toString"],
+          default: "l",
+          nameds: [
+            "utilB",
+            "a",
+            "b",
+            "d",
+            "ClassName",
+            "e",
+            "f",
+            "g1",
+            "h2",
+            "bar",
+          ],
         },
         dirPath,
-        path.join(dirPath, "/const-1.ts")
+        path.join(dirPath, "/exports.ts")
       )
     ).toMatchInlineSnapshot(
-      '"export { default as Def, NAME, AGE, toString } from \\"./const-1\\""'
+      '"export { default as l, utilB, a, b, d, ClassName, e, f, g1, h2, bar } from \\"./exports\\""'
     );
   });
 });

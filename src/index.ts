@@ -1,13 +1,14 @@
 import { createUnplugin } from "unplugin";
 import chokidar from "chokidar";
 import type { Options } from "./types";
-import { genReExportFile } from "./utils";
+import { genReExportFile, getOutputFilePaths } from "./utils";
 
 export default createUnplugin<Options>((options) => {
   let watcher;
   if (options) {
     watcher = chokidar.watch(options.dir, {
       persistent: true,
+      ignored: getOutputFilePaths(options.dir, options.outputFile),
     });
     watcher
       .on("add", (path) => genReExportFile(options, path))

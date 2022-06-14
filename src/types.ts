@@ -1,4 +1,4 @@
-type Dir = string | string[];
+export type Dir = string | string[];
 
 export interface Options {
   dir: Dir;
