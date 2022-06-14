@@ -5,6 +5,7 @@ import traverse from "@babel/traverse";
 import path from "path";
 import fs from "fs";
 import type { TraverseOptions } from "babel__traverse";
+import type { ParseResult } from "@babel/parser";
 
 export function parseExport(filePath: string): Exports {
   const ast = generateAST(filePath);
@@ -36,7 +37,7 @@ export function generateAST(filePath: string) {
   return ast;
 }
 
-export function traverseAST(ast: ReturnType<typeof parse>): Exports {
+export function traverseAST(ast: ParseResult<t.File>): Exports {
   const namedExports: string[] = [];
   let defaultExport;
 

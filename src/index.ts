@@ -4,24 +4,21 @@ import type { Options } from "./types";
 import { genReExportFile } from "./utils";
 
 export default createUnplugin<Options>((options) => {
-  if (!options) {
-    return {
-      name: "unplugin-auto-re-export",
-    };
+  let watcher;
+  if (options) {
+    watcher = chokidar.watch(options.dir, {
+      persistent: true,
+    });
+    watcher
+      .on("add", (path) => genReExportFile(options, path))
+      .on("change", (path) => genReExportFile(options, path))
+      .on("unlink", (path) => genReExportFile(options, path));
   }
-
-  const watcher = chokidar.watch(options.dir, {
-    persistent: true,
-  });
-  watcher
-    .on("add", (path) => genReExportFile(options, path))
-    .on("change", (path) => genReExportFile(options, path))
-    .on("unlink", (path) => genReExportFile(options, path));
 
   return {
     name: "unplugin-auto-re-export",
-    buildEnd() {
-      watcher.close().then(() => console.log("closed"));
-    },
+    // buildEnd() {
+    //   watcher.close().then(() => console.log("closed"));
+    // },
   };
 });
