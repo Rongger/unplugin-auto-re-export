@@ -4,8 +4,11 @@ import { parse } from "@babel/parser";
 import traverse from "@babel/traverse";
 import path from "path";
 import fs from "fs";
+import humps from "humps";
 import type { TraverseOptions } from "babel__traverse";
 import type { ParseResult } from "@babel/parser";
+
+export const __FILENAME__ = Symbol(`__FILENAME__`);
 
 export function parseExport(filePath: string): Exports {
   const ast = generateAST(filePath);
@@ -18,14 +21,19 @@ export function generateRaw(
   dirPath: string,
   filePath: string
 ) {
-  const exportList = (
-    exports.default ? [`default as ${exports.default}`] : []
-  ).concat(exports.nameds);
+  const def =
+    exports.default === __FILENAME__
+      ? humps.camelize(path.parse(filePath).name)
+      : exports.default;
+
+  const exportList = (exports.default ? [`default as ${def}`] : []).concat(
+    exports.nameds
+  );
 
   if (exportList.length === 0) return "";
 
   const relativePath = getRelativePath(dirPath, filePath);
-  return `export { ${exportList.join(", ")} } from "${relativePath}"`;
+  return `export { ${exportList.join(", ")} } from "${relativePath}";`;
 }
 
 export function generateAST(filePath: string) {
@@ -46,7 +54,7 @@ export function traverseAST(ast: ParseResult<t.File>): Exports {
       if (!path.node.declaration) return;
 
       const name = parseDeclaration(path.node.declaration);
-      if (name) namedExports.push(name);
+      if (name) namedExports.push(name as string);
     },
     ExportDefaultDeclaration(path) {
       const name = parseDeclaration(path.node.declaration);
@@ -81,6 +89,7 @@ function parseDeclaration(declaration: t.Declaration | t.Expression) {
   // 函数导出
   else if (t.isFunctionDeclaration(declaration)) {
     if (declaration.id) name = declaration.id.name;
+    else name = __FILENAME__;
   }
   // 变量导出
   else if (t.isVariableDeclaration(declaration)) {

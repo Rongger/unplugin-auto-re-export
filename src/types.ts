@@ -1,3 +1,5 @@
+import { __FILENAME__ } from "./parse";
+
 export type Dir = string | string[];
 
 export interface Options {
@@ -7,6 +9,6 @@ export interface Options {
 }
 
 export interface Exports {
-  default?: string;
+  default?: string | typeof __FILENAME__;
   nameds: string[];
 }

@@ -1,52 +1,57 @@
 lockfileVersion: 5.4
 
-specifiers:
-  '@babel/parser': ^7.18.4
-  '@babel/traverse': ^7.18.2
-  '@babel/types': ^7.18.4
-  '@types/babel__traverse': ^7.17.1
-  '@types/node': ^17.0.34
-  '@typescript-eslint/eslint-plugin': ^5.27.1
-  '@typescript-eslint/parser': ^5.27.1
-  bumpp: ^7.1.1
-  chokidar: ^3.5.3
-  eslint: ^8.15.0
-  esno: ^0.16.3
-  fast-glob: ^3.2.11
-  nodemon: ^2.0.16
-  rimraf: ^3.0.2
-  rollup: ^2.74.0
-  tsup: ^5.12.8
-  typescript: ^4.6.4
-  unplugin: ^0.6.3
-  vite: ^2.9.9
-  vitest: ^0.12.6
-  webpack: ^5.72.1
+importers:
 
-dependencies:
-  '@babel/parser': 7.18.4
-  '@babel/traverse': 7.18.2
-  '@babel/types': 7.18.4
-  chokidar: 3.5.3
-  unplugin: 0.6.3_cn5vsx3fyf54xf3bhswlwu5rce
-
-devDependencies:
-  '@types/babel__traverse': 7.17.1
-  '@types/node': 17.0.34
-  '@typescript-eslint/eslint-plugin': 5.27.1_anp3juxuvl5q5hdcfz64jhu7vq
-  '@typescript-eslint/parser': 5.27.1_hcfsmds2fshutdssjqluwm76uu
-  bumpp: 7.1.1
-  eslint: 8.15.0
-  esno: 0.16.3
-  fast-glob: 3.2.11
-  nodemon: 2.0.16
-  rimraf: 3.0.2
-  rollup: 2.74.0
-  tsup: 5.12.8_typescript@4.6.4
-  typescript: 4.6.4
-  vite: 2.9.9
-  vitest: 0.12.6
-  webpack: 5.72.1
+  .:
+    specifiers:
+      '@babel/parser': ^7.18.4
+      '@babel/traverse': ^7.18.2
+      '@babel/types': ^7.18.4
+      '@types/babel__traverse': ^7.17.1
+      '@types/humps': ^2.0.1
+      '@types/node': ^17.0.34
+      '@typescript-eslint/eslint-plugin': ^5.27.1
+      '@typescript-eslint/parser': ^5.27.1
+      bumpp: ^7.1.1
+      chokidar: ^3.5.3
+      eslint: ^8.15.0
+      esno: ^0.16.3
+      fast-glob: ^3.2.11
+      humps: ^2.0.1
+      nodemon: ^2.0.16
+      rimraf: ^3.0.2
+      rollup: ^2.74.0
+      tsup: ^5.12.8
+      typescript: ^4.6.4
+      unplugin: ^0.6.3
+      vite: ^2.9.9
+      vitest: ^0.12.6
+      webpack: ^5.72.1
+    dependencies:
+      '@babel/parser': 7.18.4
+      '@babel/traverse': 7.18.2
+      '@babel/types': 7.18.4
+      chokidar: 3.5.3
+      humps: 2.0.1
+      unplugin: 0.6.3_cn5vsx3fyf54xf3bhswlwu5rce
+    devDependencies:
+      '@types/babel__traverse': 7.17.1
+      '@types/humps': 2.0.1
+      '@types/node': 17.0.34
+      '@typescript-eslint/eslint-plugin': 5.27.1_anp3juxuvl5q5hdcfz64jhu7vq
+      '@typescript-eslint/parser': 5.27.1_hcfsmds2fshutdssjqluwm76uu
+      bumpp: 7.1.1
+      eslint: 8.15.0
+      esno: 0.16.3
+      fast-glob: 3.2.11
+      nodemon: 2.0.16
+      rimraf: 3.0.2
+      rollup: 2.74.0
+      tsup: 5.12.8_typescript@4.6.4
+      typescript: 4.6.4
+      vite: 2.9.9
+      vitest: 0.12.6
+      webpack: 5.72.1
 
 packages:
 
@@ -304,6 +309,10 @@ packages:
 
   /@types/estree/0.0.51:
     resolution: {integrity: sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==}
+
+  /@types/humps/2.0.1:
+    resolution: {integrity: sha512-cxIGJjiOQRl5s/KjqoTa0u39qKrVD3T6+6eGsERva0MLBp9AMVG8udKn9JZgVDe9zF0J9H4SRVzKILK6iZ9IZQ==}
+    dev: true
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
@@ -1760,6 +1769,10 @@ packages:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
     dev: true
+
+  /humps/2.0.1:
+    resolution: {integrity: sha512-E0eIbrFWUhwfXJmsbdjRQFQPrl5pTEoKlz163j1mTqqUnU9PgR4AgB8AIITzuB3vLBdxZXyZ9TDIrwB2OASz4g==}
+    dev: false
 
   /ignore-by-default/1.0.1:
     resolution: {integrity: sha1-SMptcvbGo68Aqa1K5odr44ieKwk=}
