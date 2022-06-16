@@ -23,12 +23,10 @@ export function genReExportFile(options: Options, path: string) {
 }
 
 export function writeExportFromDir(dirPath: string, options: Options) {
-  const { ignore = [] } = options;
   const [indexPath] = getOutputFilePaths(dirPath, options.outputFile);
   const files = fg.sync(`${dirPath}/**/*.{js,jsx,ts,tsx}`, {
-    ignore: [...ignore, indexPath],
+    ignore: [...options.ignore, indexPath],
   });
-  // console.log(files);
 
   const content = files.reduce<string>((raws, path) => {
     const exports = parseExport(path);
@@ -45,6 +43,14 @@ function resolveDir(dir: Dir) {
   return Array.isArray(dir) ? dir : [dir];
 }
 
-export function getOutputFilePaths(dir: Dir, outputFile = "index.js") {
+export function getOutputFilePaths(dir: Dir, outputFile: string) {
   return resolveDir(dir).map((dirPath) => path.join(dirPath, outputFile));
 }
+
+export const resolveDefaultOptions = ({
+  dir = [],
+  ignore = [],
+  outputFile = "index.js",
+}: Partial<Options>): Options => {
+  return { dir, ignore, outputFile };
+};
