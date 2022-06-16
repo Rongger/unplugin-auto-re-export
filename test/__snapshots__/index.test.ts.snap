@@ -1,0 +1,36 @@
+// Vitest Snapshot v1
+
+exports[`index > getOutputFilePaths > 
+      [
+        "src/consts/index.js",
+        "src/utils/index.js",
+      ]
+     1`] = `
+[
+  "src/consts/index.js",
+  "src/utils/index.js",
+]
+`;
+
+exports[`index > getOutputFilePaths > 
+      [
+        "src/consts/index.js",
+      ]
+     1`] = `
+[
+  "src/consts/index.js",
+]
+`;
+
+exports[`index > getOutputFilePaths 1`] = `
+[
+  "src/consts/index.js",
+]
+`;
+
+exports[`index > getOutputFilePaths 2`] = `
+[
+  "src/consts/index.js",
+  "src/utils/index.js",
+]
+`;

@@ -3,21 +3,10 @@ import { getOutputFilePaths } from "../src/utils";
 
 describe("index", () => {
   test("getOutputFilePaths", async () => {
-    expect(
-      getOutputFilePaths("src/consts")
-    ).toMatchInlineSnapshot(`
-      [
-        "src/consts/index.js",
-      ]
-    `);
+    expect(getOutputFilePaths("src/consts", "index.js")).toMatchSnapshot();
 
     expect(
-      getOutputFilePaths(["src/consts", "src/utils"])
-    ).toMatchInlineSnapshot(`
-      [
-        "src/consts/index.js",
-        "src/utils/index.js",
-      ]
-    `);
+      getOutputFilePaths(["src/consts", "src/utils"], "index.js")
+    ).toMatchSnapshot();
   });
 });

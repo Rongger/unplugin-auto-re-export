@@ -1,12 +1,10 @@
-export const NAME = "name";
-export default function Def() {
-  return;
-}
+const e = 5;
+const f = 6;
 
-export function test() {
-  return 12;
+export function foo(path: string): number {
+  return path.length;
 }
+export const a = 1;
+export class ClassName {}
 
-export function test1() {
-  return 123;
-}
+export { e as g, f };

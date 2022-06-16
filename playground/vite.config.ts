@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [
     Inspect(),
     Unplugin({
-      dir: ["utils"],
-      ignore: ["consts/README.md"],
+      dir: ["consts"],
+      ignore: ["consts/const-2.ts"],
       outputFile: "index.ts",
     }),
   ],

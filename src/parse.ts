@@ -57,7 +57,7 @@ export function traverseAST(ast: ParseResult<t.File>): Exports {
       if (name) namedExports.push(name as string);
     },
     ExportDefaultDeclaration(path) {
-      const name = parseDeclaration(path.node.declaration);
+      const name = parseExportDefaultDeclaration(path.node.declaration);
       if (name) defaultExport = name;
     },
     ExportSpecifier(path) {
@@ -82,12 +82,11 @@ function getRelativePath(dirPath: string, filePath: string) {
   return "./" + path.join(path.relative(dirPath, dir), name);
 }
 
-function parseDeclaration(declaration: t.Declaration | t.Expression) {
+function parseDeclaration(declaration: t.Declaration) {
   let name;
 
-  if (t.isIdentifier(declaration)) name = declaration.name;
   // 函数导出
-  else if (t.isFunctionDeclaration(declaration)) {
+  if (t.isFunctionDeclaration(declaration)) {
     if (declaration.id) name = declaration.id.name;
     else name = __FILENAME__;
   }
@@ -109,6 +108,33 @@ function parseDeclaration(declaration: t.Declaration | t.Expression) {
   // 类导出
   else if (t.isClassDeclaration(declaration)) {
     name = declaration.id.name;
+  }
+  // typescript 类型、接口导出
+  else if (
+    t.isTSTypeAliasDeclaration(declaration) ||
+    t.isTSInterfaceDeclaration(declaration)
+  ) {
+    name = declaration.id.name;
+  }
+
+  return name;
+}
+
+function parseExportDefaultDeclaration(
+  declaration: t.ExportDefaultDeclaration["declaration"]
+) {
+  if (t.isDeclaration(declaration)) {
+    return parseDeclaration(declaration);
+  }
+  let name;
+
+  // expression 导出
+  if (t.isExpression(declaration)) {
+    if (t.isIdentifier(declaration)) {
+      name = declaration.name;
+    } else {
+      name = __FILENAME__;
+    }
   }
 
   return name;

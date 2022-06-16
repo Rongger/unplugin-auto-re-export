@@ -3,27 +3,14 @@ import { describe, expect, test } from "vitest";
 import { parseExport, generateRaw } from "../src/parse";
 
 describe("parse", () => {
-  const dirPath = "playground/utils";
+  const dirPath = path.resolve(__dirname, "./fixtures");
 
   test("parseExport", async () => {
-    expect(parseExport(path.join(dirPath, "/exports.ts")))
-      .toMatchInlineSnapshot(`
-        {
-          "default": "l",
-          "nameds": [
-            "utilB",
-            "a",
-            "b",
-            "d",
-            "ClassName",
-            "e",
-            "f",
-            "g1",
-            "h2",
-            "bar",
-          ],
-        }
-      `);
+    expect(parseExport(path.join(dirPath, "/exports.ts"))).toMatchSnapshot();
+  });
+
+  test("parseTSExport", async () => {
+    expect(parseExport(path.join(dirPath, "/ts-exports.ts"))).toMatchSnapshot();
   });
 
   test("generateRaw", () => {
@@ -47,8 +34,6 @@ describe("parse", () => {
         dirPath,
         path.join(dirPath, "/exports.ts")
       )
-    ).toMatchInlineSnapshot(
-      '"export { default as l, utilB, a, b, d, ClassName, e, f, g1, h2, bar } from \\"./exports\\""'
-    );
+    ).toMatchSnapshot();
   });
 });

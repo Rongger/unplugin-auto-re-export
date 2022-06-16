@@ -1,1 +1,1 @@
-export const AAA = 1;
+export const y = 1;

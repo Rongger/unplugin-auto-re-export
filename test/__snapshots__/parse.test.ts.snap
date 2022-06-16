@@ -1,0 +1,34 @@
+// Vitest Snapshot v1
+
+exports[`parse > generateRaw 1`] = `"export { default as l, utilB, a, b, d, ClassName, e, f, g1, h2, bar } from \\"./exports\\";"`;
+
+exports[`parse > parseExport 1`] = `
+{
+  "default": "l",
+  "nameds": [
+    "utilB",
+    "a",
+    "b",
+    "d",
+    "ClassName",
+    "e",
+    "f",
+    "g1",
+    "h2",
+    "bar",
+  ],
+}
+`;
+
+exports[`parse > parseTSExport 1`] = `
+{
+  "default": undefined,
+  "nameds": [
+    "Type",
+    "StringValidator",
+    "ZipCodeValidator",
+    "mainValidator",
+    "T",
+  ],
+}
+`;

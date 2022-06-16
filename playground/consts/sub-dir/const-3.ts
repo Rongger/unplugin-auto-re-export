@@ -1,1 +1,1 @@
-export const MOBILE = 123456;
+export const x = 1;
