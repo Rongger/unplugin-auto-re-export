@@ -1,6 +1,6 @@
 # unplugin-auto-re-export
 
-[![NPM version](https://badge.fury.io/js/unplugin-auto-re-export.svg)](https://www.npmjs.com/package/unplugin-auto-re-export)
+[![NPM version](https://img.shields.io/npm/v/unplugin-auto-re-export?color=orange&label=npm)](https://www.npmjs.com/package/unplugin-auto-re-export)
 
 Unified utils for auto generate re-export file.
 
