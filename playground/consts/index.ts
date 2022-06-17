@@ -1,3 +1,3 @@
-export { foo, a, ClassName, g, f } from "./const-1";
-export { x } from "./sub-dir/const-3";
-export { y } from "./sub-dir/sub-dir/const-4";
+export * from "./const-1";
+export * from "./sub-dir/const-3";
+export * from "./sub-dir/sub-dir/const-4";

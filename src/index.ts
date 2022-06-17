@@ -2,6 +2,7 @@ import { createUnplugin } from "unplugin";
 import chokidar from "chokidar";
 import type { Options } from "./types";
 import {
+  resolveDir,
   genReExportFile,
   getOutputFilePaths,
   resolveDefaultOptions,
@@ -12,7 +13,7 @@ export default createUnplugin<Partial<Options>>((_options = {}) => {
   const options = resolveDefaultOptions(_options);
 
   if (options.dir) {
-    watcher = chokidar.watch(options.dir, {
+    watcher = chokidar.watch(resolveDir(options.dir), {
       persistent: true,
       ignored: [
         ...options.ignore,

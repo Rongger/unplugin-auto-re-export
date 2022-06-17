@@ -1,8 +1,8 @@
-import type { Dir, Options } from "./types";
+import type { Dir, Options, ExportAllMap } from "./types";
 import fg from "fast-glob";
 import fs from "fs";
 import path from "path";
-import { parseExport, generateRaw } from "./parse";
+import { parseExport, generateRaw, generateExportAllRaw } from "./parse";
 
 export function getWatchFiles(dir: Dir): string[][] {
   const dirs = resolveDir(dir);
@@ -28,9 +28,12 @@ export function writeExportFromDir(dirPath: string, options: Options) {
     ignore: [...options.ignore, indexPath],
   });
 
+  const exportAll = isExportAll(resolveExportAll(options), dirPath);
+
   const content = files.reduce<string>((raws, path) => {
-    const exports = parseExport(path);
-    const raw = generateRaw(exports, dirPath, path);
+    const raw = exportAll
+      ? generateExportAllRaw(dirPath, path)
+      : generateRaw(parseExport(path), dirPath, path);
 
     if (raw) raws += `${raw}\n`;
     return raws;
@@ -39,8 +42,9 @@ export function writeExportFromDir(dirPath: string, options: Options) {
   if (content) fs.writeFileSync(indexPath, content);
 }
 
-function resolveDir(dir: Dir) {
-  return Array.isArray(dir) ? dir : [dir];
+export function resolveDir(dir: Dir) {
+  if (typeof dir === "string") return [dir];
+  return dir.map((i) => (typeof i === "string" ? i : i.path));
 }
 
 export function getOutputFilePaths(dir: Dir, outputFile: string) {
@@ -51,6 +55,24 @@ export const resolveDefaultOptions = ({
   dir = [],
   ignore = [],
   outputFile = "index.js",
+  exportAll = false,
+  ...arg
 }: Partial<Options>): Options => {
-  return { dir, ignore, outputFile };
+  return { dir, ignore, outputFile, exportAll, ...arg };
 };
+
+function resolveExportAll(options: Options) {
+  const map: ExportAllMap = new Map([["DEFAULT", options.exportAll]]);
+  if (Array.isArray(options.dir)) {
+    options.dir.forEach((i) => {
+      if (typeof i !== "string" && typeof i.exportAll !== "undefined") {
+        map.set(i.path, i.exportAll);
+      }
+    });
+  }
+  return map;
+}
+
+function isExportAll(map: ExportAllMap, dirPath: string) {
+  return map.has(dirPath) ? map.get(dirPath) : map.get("DEFAULT");
+}

@@ -36,6 +36,11 @@ export function generateRaw(
   return `export { ${exportList.join(", ")} } from "${relativePath}";`;
 }
 
+export function generateExportAllRaw(dirPath: string, filePath: string) {
+  const relativePath = getRelativePath(dirPath, filePath);
+  return `export * from "${relativePath}";`;
+}
+
 export function generateAST(filePath: string) {
   const content = fs.readFileSync(filePath, "utf-8");
   const ast = parse(content, {
