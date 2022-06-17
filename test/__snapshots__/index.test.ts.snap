@@ -1,27 +1,5 @@
 // Vitest Snapshot v1
 
-exports[`index > getOutputFilePaths > 
-      [
-        "src/consts/index.js",
-        "src/utils/index.js",
-      ]
-     1`] = `
-[
-  "src/consts/index.js",
-  "src/utils/index.js",
-]
-`;
-
-exports[`index > getOutputFilePaths > 
-      [
-        "src/consts/index.js",
-      ]
-     1`] = `
-[
-  "src/consts/index.js",
-]
-`;
-
 exports[`index > getOutputFilePaths 1`] = `
 [
   "src/consts/index.js",
@@ -33,4 +11,32 @@ exports[`index > getOutputFilePaths 2`] = `
   "src/consts/index.js",
   "src/utils/index.js",
 ]
+`;
+
+exports[`index > isExportAll 1`] = `true`;
+
+exports[`index > resolveDir 1`] = `
+[
+  "consts",
+]
+`;
+
+exports[`index > resolveDir 2`] = `
+[
+  "consts",
+]
+`;
+
+exports[`index > resolveDir 3`] = `
+[
+  "consts",
+  "utils",
+]
+`;
+
+exports[`index > resolveExportAll 1`] = `
+Map {
+  "DEFAULT" => false,
+  "utils" => true,
+}
 `;

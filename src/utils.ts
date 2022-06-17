@@ -61,7 +61,7 @@ export const resolveDefaultOptions = ({
   return { dir, ignore, outputFile, exportAll, ...arg };
 };
 
-function resolveExportAll(options: Options) {
+export function resolveExportAll(options: Options) {
   const map: ExportAllMap = new Map([["DEFAULT", options.exportAll]]);
   if (Array.isArray(options.dir)) {
     options.dir.forEach((i) => {
@@ -73,6 +73,6 @@ function resolveExportAll(options: Options) {
   return map;
 }
 
-function isExportAll(map: ExportAllMap, dirPath: string) {
+export function isExportAll(map: ExportAllMap, dirPath: string) {
   return map.has(dirPath) ? map.get(dirPath) : map.get("DEFAULT");
 }

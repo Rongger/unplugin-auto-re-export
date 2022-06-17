@@ -1,9 +1,9 @@
 import path from "path";
 import { describe, expect, test } from "vitest";
-import { parseExport, generateRaw } from "../src/parse";
+import { parseExport, generateRaw, generateExportAllRaw } from "../src/parse";
 
 describe("parse", () => {
-  const dirPath = path.resolve(__dirname, "./fixtures");
+  const dirPath = path.resolve(__dirname, "./fixtures/consts");
 
   test("parseExport", async () => {
     expect(parseExport(path.join(dirPath, "/exports.ts"))).toMatchSnapshot();
@@ -34,6 +34,12 @@ describe("parse", () => {
         dirPath,
         path.join(dirPath, "/exports.ts")
       )
+    ).toMatchSnapshot();
+  });
+
+  test("generateExportAllRaw", () => {
+    expect(
+      generateExportAllRaw(dirPath, path.join(dirPath, "/exports.ts"))
     ).toMatchSnapshot();
   });
 });

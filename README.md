@@ -79,8 +79,18 @@ module.exports = {
 
 ## Options
 
-| Key        | Type                 | Default    | Description                                   |
-| ---------- | -------------------- | ---------- | --------------------------------------------- |
-| dir        | `string \| string[]` | `[]`       | An array of watched directory path            |
-| ignore     | `string[]`           | `[]`       | An array of file path to exclude watched file |
-| outputFile | `string`             | `index.js` | Define the outputfile name and extension name |
+| Key        | Type                                 | Default    | Description                                      |
+| ---------- | ------------------------------------ | ---------- | ------------------------------------------------ |
+| dir        | `string \| string[] \| DirConfig[] ` | `[]`       | An array of watched directory path               |
+| ignore     | `string[]`                           | `[]`       | An array of file path to exclude watched file    |
+| outputFile | `string`                             | `index.js` | Define the outputfile name and extension name    |
+| exportAll  | `boolean`                            | `false`    | Is spread all exports with `export * from "mod"` |
+
+##### DirConfig
+
+```ts
+type DirConfig = {
+  path: string;
+  exportAll?: boolean;
+};
+```
