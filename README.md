@@ -2,30 +2,52 @@
 
 [![NPM version](https://img.shields.io/npm/v/unplugin-auto-re-export?color=orange&label=npm)](https://www.npmjs.com/package/unplugin-auto-re-export)
 
-Unified utils for auto generate re-export file.
+Auto generate re-export file for Vite, Webpack, Rollup and more. Powered by <a href="https://github.com/unjs/unplugin">unplugin</a>.
 
-###### feature
+If you have some files like
 
-- Supports Vite, Webpack, Rollup, esbuild and more, powered by <a href="https://github.com/unjs/unplugin">unplugin</a>.
-- Auto generate re-export file and modify when watched files change.
+```js
+// utils/types.js
+export const type = 1;
+
+// utils/func.js
+export function foo() {
+  /* ... */
+}
+```
+
+the plugin can generate a file to re-export
+
+```js
+// utils/index.js
+export { type } from "./types";
+export { foo } from "./func";
+```
+
+by options
+
+```js
+autoReExportPlugin({
+  dir: ["utils"];
+})
+```
+
+and modify when watched files change.
 
 ## Install
 
 ```bash
 # npm
 npm i -D unplugin-auto-re-export
-
 # yarn
 yarn add -D unplugin-auto-re-export
-
 # pnpm
 pnpm add -D unplugin-auto-re-export
 ```
 
 ## Usage
 
-<details>
-<summary>Vite</summary><br>
+<summary>Vite</summary>
 
 ```ts
 // vite.config.ts
@@ -40,6 +62,21 @@ export default defineConfig({
 });
 ```
 
+<details>
+<summary>Webpack</summary><br>
+
+```ts
+// webpack.config.js
+module.exports = {
+  /* ... */
+  plugins: [
+    require("unplugin-auto-re-export/webpack")({
+      /* options */
+    }),
+  ],
+};
+```
+
 <br></details>
 
 <details>
@@ -52,23 +89,6 @@ import autoReExportPlugin from "unplugin-auto-re-export/rollup";
 export default {
   plugins: [
     autoReExportPlugin({
-      /* options */
-    }),
-  ],
-};
-```
-
-<br></details>
-
-<details>
-<summary>Webpack</summary><br>
-
-```ts
-// webpack.config.js
-module.exports = {
-  /* ... */
-  plugins: [
-    require("unplugin-auto-re-export/webpack")({
       /* options */
     }),
   ],
