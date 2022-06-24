@@ -47,7 +47,8 @@ pnpm add -D unplugin-auto-re-export
 
 ## Usage
 
-<summary>Vite</summary>
+<details>
+<summary>Vite</summary><br>
 
 ```ts
 // vite.config.ts
@@ -61,6 +62,8 @@ export default defineConfig({
   ],
 });
 ```
+
+<br></details>
 
 <details>
 <summary>Webpack</summary><br>
