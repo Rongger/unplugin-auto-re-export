@@ -17,6 +17,18 @@ export interface Options {
 export interface Exports {
   default?: string | typeof __FILENAME__;
   nameds: string[];
+  defaultType?: string | typeof __FILENAME__;
+  namedTypes: string[];
 }
 
 export type ExportAllMap = Map<string, boolean>;
+
+export type ExportName = {
+  name?: string | typeof __FILENAME__;
+  type: ExportNameTypes;
+};
+
+export enum ExportNameTypes {
+  type,
+  variable,
+}

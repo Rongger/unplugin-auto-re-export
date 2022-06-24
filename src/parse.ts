@@ -1,4 +1,5 @@
-import type { Exports } from "./types";
+import type { Exports, ExportName } from "./types";
+import { ExportNameTypes } from "./types";
 import * as t from "@babel/types";
 import { parse } from "@babel/parser";
 import traverse from "@babel/traverse";
@@ -21,19 +22,27 @@ export function generateRaw(
   dirPath: string,
   filePath: string
 ) {
-  const def =
-    exports.default === __FILENAME__
-      ? humps.camelize(path.parse(filePath).name)
-      : exports.default;
-
-  const exportList = (exports.default ? [`default as ${def}`] : []).concat(
+  const exportList = resolveDefaultRaw(exports.default, filePath).concat(
     exports.nameds
   );
-
-  if (exportList.length === 0) return "";
+  const exportTypeList = resolveDefaultRaw(
+    exports.defaultType,
+    filePath
+  ).concat(exports.namedTypes);
 
   const relativePath = getRelativePath(dirPath, filePath);
-  return `export { ${exportList.join(", ")} } from "${relativePath}";`;
+
+  const exportRaw =
+    exportList.length === 0
+      ? ""
+      : `export { ${exportList.join(", ")} } from "${relativePath}";`;
+
+  const exportTypeRaw =
+    exportTypeList.length === 0
+      ? ""
+      : `export type { ${exportTypeList.join(", ")} } from "${relativePath}";`;
+
+  return [exportRaw, exportTypeRaw].filter(Boolean).join("\n");
 }
 
 export function generateExportAllRaw(dirPath: string, filePath: string) {
@@ -51,19 +60,29 @@ export function generateAST(filePath: string) {
 }
 
 export function traverseAST(ast: ParseResult<t.File>): Exports {
-  const namedExports: string[] = [];
-  let defaultExport;
+  const namedExports: string[] = [],
+    namedTypeExports: string[] = [];
+  let defaultExport, defaultTypeExport;
 
   const visitor: TraverseOptions = {
     ExportNamedDeclaration(path) {
       if (!path.node.declaration) return;
 
-      const name = parseDeclaration(path.node.declaration);
-      if (name) namedExports.push(name as string);
+      const { name, type } = parseDeclaration(path.node.declaration);
+      if (!name) return;
+      (type === ExportNameTypes.variable
+        ? namedExports
+        : namedTypeExports
+      ).push(name as string);
     },
     ExportDefaultDeclaration(path) {
-      const name = parseExportDefaultDeclaration(path.node.declaration);
-      if (name) defaultExport = name;
+      const { name, type } = parseExportDefaultDeclaration(
+        path.node.declaration
+      );
+      if (!name) return;
+
+      if (type === ExportNameTypes.variable) defaultExport = name;
+      else defaultTypeExport = name;
     },
     ExportSpecifier(path) {
       if (t.isIdentifier(path.node.exported))
@@ -78,6 +97,8 @@ export function traverseAST(ast: ParseResult<t.File>): Exports {
   return {
     nameds: namedExports,
     default: defaultExport,
+    namedTypes: namedTypeExports,
+    defaultType: defaultTypeExport,
   };
 }
 
@@ -87,8 +108,9 @@ function getRelativePath(dirPath: string, filePath: string) {
   return "./" + path.join(path.relative(dirPath, dir), name);
 }
 
-function parseDeclaration(declaration: t.Declaration) {
-  let name;
+function parseDeclaration(declaration: t.Declaration): ExportName {
+  let name,
+    type = ExportNameTypes.variable;
 
   // 函数导出
   if (t.isFunctionDeclaration(declaration)) {
@@ -120,14 +142,15 @@ function parseDeclaration(declaration: t.Declaration) {
     t.isTSInterfaceDeclaration(declaration)
   ) {
     name = declaration.id.name;
+    type = ExportNameTypes.type;
   }
 
-  return name;
+  return { name, type };
 }
 
 function parseExportDefaultDeclaration(
   declaration: t.ExportDefaultDeclaration["declaration"]
-) {
+): ExportName {
   if (t.isDeclaration(declaration)) {
     return parseDeclaration(declaration);
   }
@@ -142,5 +165,16 @@ function parseExportDefaultDeclaration(
     }
   }
 
-  return name;
+  return { name, type: ExportNameTypes.variable };
+}
+
+function resolveDefaultRaw(
+  defaultRaw: string | typeof __FILENAME__ | undefined,
+  filePath: string
+) {
+  const def =
+    defaultRaw === __FILENAME__
+      ? humps.camelize(path.parse(filePath).name)
+      : defaultRaw;
+  return exports.default ? [`default as ${def}`] : [];
 }

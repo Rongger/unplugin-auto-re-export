@@ -30,6 +30,8 @@ describe("parse", () => {
             "h2",
             "bar",
           ],
+          defaultType: undefined,
+          namedTypes: ["Type"],
         },
         dirPath,
         path.join(dirPath, "/exports.ts")

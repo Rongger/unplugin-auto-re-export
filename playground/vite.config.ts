@@ -9,7 +9,7 @@ export default defineConfig({
       dir: ["consts"],
       ignore: ["consts/const-2.ts"],
       outputFile: "index.ts",
-      exportAll: true,
+      // exportAll: true,
     }),
   ],
 });
