@@ -3,7 +3,7 @@
 exports[`parse > generateExportAllRaw 1`] = `"export * from \\"./exports\\";"`;
 
 exports[`parse > generateRaw 1`] = `
-"export { utilB, a, b, d, ClassName, e, f, g1, h2, bar } from \\"./exports\\";
+"export { default as l, utilB, a, b, d, ClassName, e, f, g1, h2, bar } from \\"./exports\\";
 export type { Type } from \\"./exports\\";"
 `;
 

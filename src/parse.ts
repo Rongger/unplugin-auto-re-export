@@ -22,9 +22,13 @@ export function generateRaw(
   dirPath: string,
   filePath: string
 ) {
+  console.log("exports", exports);
+
   const exportList = resolveDefaultRaw(exports.default, filePath).concat(
     exports.nameds
   );
+  console.log(exportList);
+
   const exportTypeList = resolveDefaultRaw(
     exports.defaultType,
     filePath
@@ -176,5 +180,5 @@ function resolveDefaultRaw(
     defaultRaw === __FILENAME__
       ? humps.camelize(path.parse(filePath).name)
       : defaultRaw;
-  return exports.default ? [`default as ${def}`] : [];
+  return defaultRaw ? [`default as ${def}`] : [];
 }
