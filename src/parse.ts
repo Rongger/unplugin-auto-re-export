@@ -22,12 +22,9 @@ export function generateRaw(
   dirPath: string,
   filePath: string
 ) {
-  console.log("exports", exports);
-
   const exportList = resolveDefaultRaw(exports.default, filePath).concat(
     exports.nameds
   );
-  console.log(exportList);
 
   const exportTypeList = resolveDefaultRaw(
     exports.defaultType,
@@ -147,6 +144,10 @@ function parseDeclaration(declaration: t.Declaration): ExportName {
   ) {
     name = declaration.id.name;
     type = ExportNameTypes.type;
+  }
+  // typescript 枚举导出
+  else if (t.isTSEnumDeclaration(declaration)) {
+    name = declaration.id.name;
   }
 
   return { name, type };

@@ -6,6 +6,12 @@ export interface StringValidator {
   isAcceptable(s: string): boolean;
 }
 
+export enum Enum {
+  a,
+  b,
+  c,
+}
+
 const numberRegexp = /^[0-9]+$/;
 
 export class ZipCodeValidator implements StringValidator {

@@ -36,6 +36,7 @@ exports[`parse > parseTSExport 1`] = `
     "StringValidator",
   ],
   "nameds": [
+    "Enum",
     "ZipCodeValidator",
     "mainValidator",
     "T",
