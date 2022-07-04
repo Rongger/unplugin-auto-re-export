@@ -9,22 +9,14 @@ async function run() {
     absolute: true,
     cwd: resolve(__dirname, "../dist"),
   });
-
   for (const file of files) {
     // eslint-disable-next-line no-console
     console.log(chalk.cyan.inverse(" POST "), `Fix ${basename(file)}`);
-
+    // fix cjs exports
     let code = await fs.readFile(file, "utf8");
-    code = code.replace(
-      'var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);',
-      'var __toCommonJS = (mod) => __copyProps(__defProp(mod.default ?? {}, "__esModule", { value: true }), mod);'
-    );
-    const moduleExports = code.match(/^module.exports = .*$/m)?.[0];
-    if (moduleExports === undefined)
-      throw new Error("module.exports is not defined");
-    code += moduleExports;
+    code +=
+      "if (module.exports.default) module.exports = module.exports.default;";
     await fs.writeFile(file, code);
-
     // generate submodule .d.ts redirecting
     const name = basename(file, ".js");
     await fs.writeFile(
