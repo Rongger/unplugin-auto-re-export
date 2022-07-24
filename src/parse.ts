@@ -55,7 +55,7 @@ export function generateAST(filePath: string) {
   const content = fs.readFileSync(filePath, "utf-8");
   const ast = parse(content, {
     sourceType: "module",
-    plugins: ["typescript"],
+    plugins: ["typescript", "jsx"],
   });
   return ast;
 }

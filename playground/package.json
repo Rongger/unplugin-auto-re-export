@@ -4,6 +4,10 @@
     "dev": "nodemon -w '../src/**/*.ts' -e .ts -x 'vite'"
   },
   "devDependencies": {
+    "@types/react": "^18.0.15",
     "vite": "^2.9.13"
+  },
+  "dependencies": {
+    "react": "^18.2.0"
   }
 }
