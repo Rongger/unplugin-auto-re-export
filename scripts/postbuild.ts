@@ -16,13 +16,6 @@ async function run() {
     code +=
       "if (module.exports.default) module.exports = module.exports.default;";
     await fs.writeFile(file, code);
-
-    // generate submodule .d.ts redirecting
-    const name = basename(file, ".js");
-    await fs.writeFile(
-      `${name}.d.ts`,
-      `export { default } from './dist/${name}'\n`
-    );
   }
 }
 
