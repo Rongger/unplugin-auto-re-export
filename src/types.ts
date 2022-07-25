@@ -31,6 +31,12 @@ export interface Options {
    * @default false
    */
   exportAll: boolean;
+
+  /**
+   * Whether to re-export the directory deeply
+   * @default false
+   */
+  deep: boolean;
 }
 
 export interface Exports {

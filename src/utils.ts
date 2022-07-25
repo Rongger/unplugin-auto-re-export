@@ -24,9 +24,12 @@ export function genReExportFile(options: Options, path: string) {
 
 export function writeExportFromDir(dirPath: string, options: Options) {
   const [indexPath] = getOutputFilePaths(dirPath, options.outputFile);
-  const files = fg.sync(`${dirPath}/**/*.{js,jsx,ts,tsx}`, {
-    ignore: [...options.ignore, indexPath],
-  });
+  const files = fg.sync(
+    `${dirPath}${options.deep ? "/**" : ""}/*.{js,jsx,ts,tsx}`,
+    {
+      ignore: [...options.ignore, indexPath],
+    }
+  );
 
   const exportAll = isExportAll(resolveExportAll(options), dirPath);
 
@@ -56,9 +59,10 @@ export const resolveDefaultOptions = ({
   ignore = [],
   outputFile = "index.js",
   exportAll = false,
+  deep = false,
   ...arg
 }: Partial<Options>): Options => {
-  return { dir, ignore, outputFile, exportAll, ...arg };
+  return { dir, ignore, outputFile, exportAll, deep, ...arg };
 };
 
 export function resolveExportAll(options: Options) {

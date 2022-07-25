@@ -8,6 +8,7 @@ export default defineConfig({
       ignore: ["consts/const-2.ts"],
       outputFile: "index.ts",
       // exportAll: true,
+      deep: true,
     }),
   ],
 });
