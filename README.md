@@ -28,8 +28,8 @@ by options
 
 ```js
 autoReExportPlugin({
-  dir: ["utils"];
-})
+  dir: ["utils"],
+});
 ```
 
 and modify when watched files change.
@@ -37,12 +37,7 @@ and modify when watched files change.
 ## Install
 
 ```bash
-# npm
 npm i -D unplugin-auto-re-export
-# yarn
-yarn add -D unplugin-auto-re-export
-# pnpm
-pnpm add -D unplugin-auto-re-export
 ```
 
 ## Usage
