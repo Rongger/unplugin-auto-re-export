@@ -97,13 +97,14 @@ export default {
 
 ## Options
 
-| Key        | Type                                 | Default    | Description                                                                     |
-| ---------- | ------------------------------------ | ---------- | ------------------------------------------------------------------------------- |
-| dir        | `string \| string[] \| DirConfig[] ` | `[]`       | An array of watched directory path                                              |
-| ignore     | `string[]`                           | `[]`       | An array of file path to exclude watched file                                   |
-| outputFile | `string`                             | `index.js` | Define the outputfile name and extension name                                   |
-| exportAll  | `boolean`                            | `false`    | Is spread all exports with `export * from "mod"`                                |
-| deep       | `number`                             | `Infinity` | Specifies the maximum depth of a read directory relative to the start directory |
+| Key           | Type                                 | Default    | Description                                                                                                        |
+| ------------- | ------------------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------ |
+| dir           | `string \| string[] \| DirConfig[] ` | `[]`       | An array of watched directory path                                                                                 |
+| ignore        | `string[]`                           | `[]`       | An array of file path to exclude watched file                                                                      |
+| outputFile    | `string`                             | `index.js` | Define the outputfile name and extension name                                                                      |
+| exportAll     | `boolean`                            | `false`    | Is spread all exports with `export * from "mod"`                                                                   |
+| deep          | `number`                             | `Infinity` | Specifies the maximum depth of a read directory relative to the start directory                                    |
+| baseNameMatch | `string`                             | `*`        | The pattern to match basename. See <a href="https://github.com/mrmlnc/fast-glob#pattern-syntax">pattern-syntax</a> |
 
 ##### DirConfig
 
@@ -112,5 +113,6 @@ type DirConfig = {
   path: string;
   exportAll?: boolean;
   deep?: number;
+  baseNameMatch?: string;
 };
 ```
