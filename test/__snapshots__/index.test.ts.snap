@@ -3,14 +3,17 @@
 exports[`index > genOptionsMap 1`] = `
 Map {
   "DEFAULT" => {
+    "baseNameMatch": "*",
     "deep": Infinity,
     "exportAll": false,
   },
   "consts" => {
+    "baseNameMatch": "*",
     "deep": Infinity,
     "exportAll": true,
   },
   "utils" => {
+    "baseNameMatch": "expr??",
     "deep": 2,
     "exportAll": false,
   },

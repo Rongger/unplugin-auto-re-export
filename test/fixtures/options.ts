@@ -1,22 +1,21 @@
-import { Options } from "./../../src/types";
+import { resolveDefaultOptions } from "../../src/utils";
+import type { Options } from "./../../src/types";
 
-export const options1: Options = {
+export const options1: Options = resolveDefaultOptions({
   dir: "consts",
   ignore: ["consts/exports.ts"],
   outputFile: "index.ts",
   exportAll: true,
-  deep: Infinity,
-};
+});
 
-export const options2: Options = {
+export const options2: Options = resolveDefaultOptions({
   dir: ["consts"],
   ignore: ["consts/exports.ts"],
   outputFile: "index.ts",
   exportAll: true,
-  deep: Infinity,
-};
+});
 
-export const options3: Options = {
+export const options3: Options = resolveDefaultOptions({
   dir: [
     {
       path: "consts",
@@ -25,10 +24,10 @@ export const options3: Options = {
     {
       path: "utils",
       deep: 2,
+      baseNameMatch: "expr??",
     },
   ],
   ignore: ["consts/exports.ts"],
   outputFile: "index.ts",
   exportAll: false,
-  deep: Infinity,
-};
+});
