@@ -14,6 +14,7 @@ export default defineConfig({
       outputFile: "index.ts",
       exportAll: true,
       deep: 1,
+      baseNameMatch: "const??",
     }),
   ],
 });

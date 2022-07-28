@@ -4,6 +4,7 @@ type DirConfig = {
   path: string;
   exportAll?: boolean;
   deep?: number;
+  baseNameMatch?: string;
 };
 
 export type Dir = string | string[] | DirConfig[];
@@ -39,6 +40,13 @@ export interface Options {
    * @default Infinity
    */
   deep: number;
+
+  /**
+   * The pattern to match basename.
+   * - See {@link https://github.com/mrmlnc/fast-glob#pattern-syntax pattern-syntax}
+   * @default *
+   */
+  baseNameMatch: string;
 }
 
 export interface Exports {
@@ -48,7 +56,10 @@ export interface Exports {
   namedTypes: string[];
 }
 
-export type OptionsMap = Map<string, Pick<Options, "deep" | "exportAll">>;
+export type OptionsMap = Map<
+  string,
+  Pick<Options, "deep" | "exportAll" | "baseNameMatch">
+>;
 
 export type ExportName = {
   name?: string | typeof __FILENAME__;
