@@ -1,16 +1,8 @@
-import type { Dir, Options, ExportAllMap } from "./types";
+import type { Dir, Options, OptionsMap, MapValue } from "./types";
 import fg from "fast-glob";
 import fs from "fs";
 import path from "path";
 import { parseExport, generateRaw, generateExportAllRaw } from "./parse";
-
-export function getWatchFiles(dir: Dir): string[][] {
-  const dirs = resolveDir(dir);
-  return dirs.map((path) => {
-    const source = resolveDir(path) as string[];
-    return fg.sync(source);
-  });
-}
 
 export function genReExportFile(options: Options, path: string) {
   const dirs = resolveDir(options.dir);
@@ -24,14 +16,13 @@ export function genReExportFile(options: Options, path: string) {
 
 export function writeExportFromDir(dirPath: string, options: Options) {
   const [indexPath] = getOutputFilePaths(dirPath, options.outputFile);
-  const files = fg.sync(
-    `${dirPath}${options.deep ? "/**" : ""}/*.{js,jsx,ts,tsx}`,
-    {
-      ignore: [...options.ignore, indexPath],
-    }
-  );
+  const optionsMap = genOptionsMap(options);
+  const exportAll = getOptionsValue(optionsMap, dirPath, "exportAll");
 
-  const exportAll = isExportAll(resolveExportAll(options), dirPath);
+  const files = fg.sync(`${dirPath}/**/*.{js,jsx,ts,tsx}`, {
+    ignore: [...options.ignore, indexPath],
+    deep: getOptionsValue(optionsMap, dirPath, "deep"),
+  });
 
   const content = files.reduce<string>((raws, path) => {
     const raw = exportAll
@@ -59,24 +50,30 @@ export const resolveDefaultOptions = ({
   ignore = [],
   outputFile = "index.js",
   exportAll = false,
-  deep = false,
+  deep = Infinity,
   ...arg
 }: Partial<Options>): Options => {
   return { dir, ignore, outputFile, exportAll, deep, ...arg };
 };
 
-export function resolveExportAll(options: Options) {
-  const map: ExportAllMap = new Map([["DEFAULT", options.exportAll]]);
-  if (Array.isArray(options.dir)) {
-    options.dir.forEach((i) => {
-      if (typeof i !== "string" && typeof i.exportAll !== "undefined") {
-        map.set(i.path, i.exportAll);
+export function genOptionsMap(options: Options) {
+  const { dir, exportAll, deep } = options;
+  const map: OptionsMap = new Map([["DEFAULT", { exportAll, deep }]]);
+  if (Array.isArray(dir)) {
+    dir.forEach((i) => {
+      if (typeof i !== "string") {
+        const { exportAll = options.exportAll, deep = options.deep } = i;
+        map.set(i.path, { exportAll, deep });
       }
     });
   }
   return map;
 }
 
-export function isExportAll(map: ExportAllMap, dirPath: string) {
-  return map.has(dirPath) ? map.get(dirPath) : map.get("DEFAULT");
+export function getOptionsValue<T extends keyof MapValue<OptionsMap>>(
+  map: OptionsMap,
+  dirPath: string,
+  key: T
+) {
+  return (map.has(dirPath) ? map.get(dirPath) : map.get("DEFAULT"))![key];
 }

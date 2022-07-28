@@ -1,5 +1,24 @@
 // Vitest Snapshot v1
 
+exports[`index > genOptionsMap 1`] = `
+Map {
+  "DEFAULT" => {
+    "deep": Infinity,
+    "exportAll": false,
+  },
+  "consts" => {
+    "deep": Infinity,
+    "exportAll": true,
+  },
+  "utils" => {
+    "deep": 2,
+    "exportAll": false,
+  },
+}
+`;
+
+exports[`index > getOptionsValue 1`] = `2`;
+
 exports[`index > getOutputFilePaths 1`] = `
 [
   "src/consts/index.js",
@@ -12,8 +31,6 @@ exports[`index > getOutputFilePaths 2`] = `
   "src/utils/index.js",
 ]
 `;
-
-exports[`index > isExportAll 1`] = `true`;
 
 exports[`index > resolveDir 1`] = `
 [
@@ -32,11 +49,4 @@ exports[`index > resolveDir 3`] = `
   "consts",
   "utils",
 ]
-`;
-
-exports[`index > resolveExportAll 1`] = `
-Map {
-  "DEFAULT" => false,
-  "utils" => true,
-}
 `;

@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import {
   getOutputFilePaths,
   resolveDir,
-  resolveExportAll,
-  isExportAll,
+  genOptionsMap,
+  getOptionsValue,
 } from "../src/utils";
 import { options1, options2, options3 } from "./fixtures/options";
 
@@ -24,12 +24,12 @@ describe("index", () => {
     expect(resolveDir(options3.dir)).toMatchSnapshot();
   });
 
-  test("resolveExportAll", () => {
-    expect(resolveExportAll(options3)).toMatchSnapshot();
+  test("genOptionsMap", () => {
+    expect(genOptionsMap(options3)).toMatchSnapshot();
   });
 
-  test("isExportAll", () => {
-    const map = resolveExportAll(options3);
-    expect(isExportAll(map, "utils")).toMatchSnapshot();
+  test("getOptionsValue", () => {
+    const map = genOptionsMap(options3);
+    expect(getOptionsValue(map, "utils", "deep")).toMatchSnapshot();
   });
 });

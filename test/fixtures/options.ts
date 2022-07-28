@@ -5,6 +5,7 @@ export const options1: Options = {
   ignore: ["consts/exports.ts"],
   outputFile: "index.ts",
   exportAll: true,
+  deep: Infinity,
 };
 
 export const options2: Options = {
@@ -12,19 +13,22 @@ export const options2: Options = {
   ignore: ["consts/exports.ts"],
   outputFile: "index.ts",
   exportAll: true,
+  deep: Infinity,
 };
 
 export const options3: Options = {
   dir: [
     {
       path: "consts",
+      exportAll: true,
     },
     {
       path: "utils",
-      exportAll: true,
+      deep: 2,
     },
   ],
   ignore: ["consts/exports.ts"],
   outputFile: "index.ts",
   exportAll: false,
+  deep: Infinity,
 };

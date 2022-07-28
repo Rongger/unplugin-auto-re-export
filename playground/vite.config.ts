@@ -4,11 +4,16 @@ import Unplugin from "../src/vite";
 export default defineConfig({
   plugins: [
     Unplugin({
-      dir: ["consts"],
+      dir: [
+        {
+          path: "consts",
+          deep: 2,
+        },
+      ],
       ignore: ["consts/const-2.ts"],
       outputFile: "index.ts",
-      // exportAll: true,
-      deep: true,
+      exportAll: true,
+      deep: 1,
     }),
   ],
 });

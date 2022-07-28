@@ -3,6 +3,7 @@ import { __FILENAME__ } from "./parse";
 type DirConfig = {
   path: string;
   exportAll?: boolean;
+  deep?: number;
 };
 
 export type Dir = string | string[] | DirConfig[];
@@ -33,10 +34,11 @@ export interface Options {
   exportAll: boolean;
 
   /**
-   * Whether to re-export the directory deeply
-   * @default false
+   * Specifies the maximum depth of a read directory relative to the start
+   * directory
+   * @default Infinity
    */
-  deep: boolean;
+  deep: number;
 }
 
 export interface Exports {
@@ -46,7 +48,7 @@ export interface Exports {
   namedTypes: string[];
 }
 
-export type ExportAllMap = Map<string, boolean>;
+export type OptionsMap = Map<string, Pick<Options, "deep" | "exportAll">>;
 
 export type ExportName = {
   name?: string | typeof __FILENAME__;
@@ -57,3 +59,10 @@ export enum ExportNameTypes {
   type,
   variable,
 }
+
+export type MapValue<T extends Map<unknown, unknown>> = T extends Map<
+  unknown,
+  infer V
+>
+  ? V
+  : never;
