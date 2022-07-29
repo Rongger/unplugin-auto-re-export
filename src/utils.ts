@@ -2,6 +2,7 @@ import type { Dir, Options, OptionsMap, MapValue } from "./types";
 import fg from "fast-glob";
 import fs from "fs";
 import path from "path";
+import { exec } from "child_process";
 import { parseExport, generateRaw, generateExportAllRaw } from "./parse";
 
 const timerMap: Map<string, NodeJS.Timeout> = new Map();
@@ -44,7 +45,10 @@ export function writeExportFromDir(dirPath: string, options: Options) {
     return raws;
   }, "");
 
-  if (content) fs.writeFileSync(indexPath, content);
+  if (content) {
+    fs.writeFileSync(indexPath, content);
+    tryToFormatCode(indexPath);
+  }
 }
 
 export function resolveDir(dir: Dir) {
@@ -94,4 +98,9 @@ export function getOptionsValue<T extends keyof MapValue<OptionsMap>>(
   key: T
 ) {
   return (map.has(dirPath) ? map.get(dirPath) : map.get("DEFAULT"))![key];
+}
+
+function tryToFormatCode(codePath: string) {
+  exec(`eslint --fix  ${codePath}`);
+  exec(`prettier --write ${codePath}`);
 }
