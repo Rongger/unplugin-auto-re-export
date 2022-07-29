@@ -4,14 +4,21 @@ import fs from "fs";
 import path from "path";
 import { parseExport, generateRaw, generateExportAllRaw } from "./parse";
 
+const timerMap: Map<string, NodeJS.Timeout> = new Map();
+
 export function genReExportFile(options: Options, path: string) {
   const dirs = resolveDir(options.dir);
-
   const result = dirs.find((i: string) => path.startsWith(i));
-
   if (!result) return;
 
-  writeExportFromDir(result, options);
+  // 防止同一文件夹下的多个文件同时更改引发不必要的重复生成 index
+  if (timerMap.has(result)) clearTimeout(timerMap.get(result));
+  timerMap.set(
+    result,
+    setTimeout(() => {
+      writeExportFromDir(result, options);
+    }, 500)
+  );
 }
 
 export function writeExportFromDir(dirPath: string, options: Options) {
